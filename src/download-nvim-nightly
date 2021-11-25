@@ -1,0 +1,30 @@
+#!/bin/sh
+# dirty little script to download nvim-nightly appimage
+# Pre-requisites: standard GNU utils (wget, grep, etc.)
+# and pup (https://github.com/ericchiang/pup)
+# NOTE: I don't know if this is the best way to do this, but hey it works.
+
+curl 'https://github.com/neovim/neovim/releases/tag/nightly' > tmp.hmtl
+
+if [ -r tmp.html ]; then
+    wget 'https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage'
+else
+    printf 'ERROR: %s\n', 'Could not download nvim-nightly webpage.'
+    exit 1
+fi
+
+# Check if nvim.appimage was successfully downloaded and sha256sums match
+# NOTE: SC2002, Useless cat. But pup is used with `catted out` file in the wiki.
+if [ -f "$PWD/nvim.appimage" ] && \
+    [ "$(cat tmp.html | pup 'div.snippet-clipboard-content text{}' | \
+    grep 'nvim.appimage$' | sed s/nvim.appimage//g)" = \
+    "$(sha256sum nvim.appimage | sed s/nvim.appimage//g)" ]
+then
+    chmod 744 "$PWD/nvim.appimage"
+    mv "$PWD/nvim.appimage" "$HOME/.local/bin/nvim"
+else
+    printf 'ERROR: %s\n', 'Appimage unreadable or hashes did not match.'
+    exit 1
+fi
+
+exit 0

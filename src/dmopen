@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+# search for and select a file in dmenu and open it via application set in XDG
+
+xdg-open "$(fd . --hidden --type f | dmenu -l 15 -i)"
+
