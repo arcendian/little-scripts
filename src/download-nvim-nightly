@@ -4,19 +4,21 @@
 # and pup (https://github.com/ericchiang/pup)
 # NOTE: I don't know if this is the best way to do this, but hey it works.
 
-curl 'https://github.com/neovim/neovim/releases/tag/nightly' > tmp.hmtl
+tmp_file='tmp.html'
+curl 'https://github.com/neovim/neovim/releases/tag/nightly' > $tmp_file
 
-if [ -r tmp.html ]; then
+if [ -r $tmp_file ]; then
+    printf "\n%s\n" "Downloading nvim appimage"
     wget 'https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage'
 else
-    printf 'ERROR: %s\n', 'Could not download nvim-nightly webpage.'
+    printf 'ERROR: %s\n' 'Could not download nvim-nightly webpage.'
     exit 1
 fi
 
 # Check if nvim.appimage was successfully downloaded and sha256sums match
 # NOTE: SC2002, Useless cat. But pup is used with `catted out` file in the wiki.
 if [ -f "$PWD/nvim.appimage" ] && \
-    [ "$(cat tmp.html | pup 'div.snippet-clipboard-content text{}' | \
+    [ "$(cat $tmp_file | pup 'div.snippet-clipboard-content text{}' | \
     grep 'nvim.appimage$' | sed s/nvim.appimage//g)" = \
     "$(sha256sum nvim.appimage | sed s/nvim.appimage//g)" ]
 then
@@ -27,4 +29,6 @@ else
     exit 1
 fi
 
+rm $tmp_file
+printf "\n%s\n" "Finished downloading!"
 exit 0
