@@ -25,7 +25,7 @@ then
     chmod 744 "$PWD/nvim.appimage"
     mv "$PWD/nvim.appimage" "$HOME/.local/bin/nvim"
 else
-    printf 'ERROR: %s\n', 'Appimage unreadable or hashes did not match.'
+    printf 'ERROR: %s\n' 'Appimage unreadable or hashes did not match.'
     exit 1
 fi
 
