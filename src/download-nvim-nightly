@@ -5,7 +5,7 @@
 # NOTE: I don't know if this is the best way to do this, but hey it works.
 
 tmp_file='tmp.html'
-curl 'https://github.com/neovim/neovim/releases/tag/nightly' > $tmp_file
+curl 'https://github.com/neovim/neovim/releases/tag/nightly' >$tmp_file
 
 if [ -r $tmp_file ]; then
     printf "\n%s\n" "Downloading nvim appimage"
@@ -17,11 +17,10 @@ fi
 
 # Check if nvim.appimage was successfully downloaded and sha256sums match
 # NOTE: SC2002, Useless cat. But pup is used with `catted out` file in the wiki.
-if [ -f "$PWD/nvim.appimage" ] && \
-    [ "$(cat $tmp_file | pup 'div.snippet-clipboard-content text{}' | \
-    grep 'nvim.appimage$' | sed s/nvim.appimage//g)" = \
-    "$(sha256sum nvim.appimage | sed s/nvim.appimage//g)" ]
-then
+if [ -f "$PWD/nvim.appimage" ] &&
+    [ "$(cat $tmp_file | pup 'div.snippet-clipboard-content text{}' |
+        grep 'nvim.appimage$' | sed s/nvim.appimage//g)" = \
+        "$(sha256sum nvim.appimage | sed s/nvim.appimage//g)" ]; then
     chmod 744 "$PWD/nvim.appimage"
     mv "$PWD/nvim.appimage" "$HOME/.local/bin/nvim"
 else
