@@ -17,7 +17,7 @@ fi
 
 # Check if nvim.appimage was successfully downloaded and sha256sums match
 # NOTE: SC2002, Useless cat. But pup is used with `catted out` file in the wiki.
-if [ -f "$PWD/nvim.appimage" ] &&
+if [ -r "$PWD/nvim.appimage" ] &&
     [ "$(cat $tmp_file | pup 'div.snippet-clipboard-content text{}' |
         grep 'nvim.appimage$' | sed s/nvim.appimage//g)" = \
         "$(sha256sum nvim.appimage | sed s/nvim.appimage//g)" ]; then
