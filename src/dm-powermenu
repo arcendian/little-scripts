@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 # some sort of power menu
 
-choice="$(printf '%s\n%s\n%s' 'Poweroff' 'Reboot' 'Cancel' |
-    dmenu -i -p 'Turn off PC? ')"
+choices='Poweroff\nReboot\nCancel'
+choice="$(printf "$choices" | dmenu -i -p 'Turn off PC? ')"
 
 case "$choice" in
 "Poweroff")
