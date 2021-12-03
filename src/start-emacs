@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+
+choices='Launch emacsclient\nStart daemon\nFook Emacs\nCancel'
+choice="$(printf "$choices" | dmenu -i -p 'Doom Emacs: ')"
+
+case "$choice" in
+"Launch emacsclient")
+    emacsclient -c -a 'emacs' && exit 0
+    ;;
+"Start daemon")
+    pgrep emacs > /dev/null && notify-send --urgency=critical \
+		"Emacs daemon already running." || emacs --daemon
+	exit 0
+    ;;
+"Fook Emacs")
+    notify-send --urgency=critical "Going to violently purge emacs! Vim FTW!"
+	pkill emacs
+	exit 0
+    ;;
+*)
+    exit 0
+    ;;
+esac
