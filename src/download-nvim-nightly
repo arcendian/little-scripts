@@ -22,7 +22,7 @@ if [ -f "$PWD/nvim.appimage" ] &&
         grep 'nvim.appimage$' | sed s/nvim.appimage//g)" = \
         "$(sha256sum nvim.appimage | sed s/nvim.appimage//g)" ]; then
     chmod 744 "$PWD/nvim.appimage"
-    mv "$PWD/nvim.appimage" "$HOME/.local/bin/nvim"
+    mv "$PWD/nvim.appimage" "$HOME/.local/bin/nv"
 else
     printf 'ERROR: %s\n' 'Appimage unreadable or hashes did not match.'
     exit 1
