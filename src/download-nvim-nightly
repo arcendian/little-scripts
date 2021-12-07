@@ -12,6 +12,7 @@ if [ -r $tmp_file ]; then
     wget 'https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage'
 else
     printf 'ERROR: %s\n' 'Could not download nvim-nightly webpage.'
+	sleep 5s
     exit 1
 fi
 
@@ -25,9 +26,11 @@ if [ -r "$PWD/nvim.appimage" ] &&
     mv "$PWD/nvim.appimage" "$HOME/.local/bin/nv"
 else
     printf 'ERROR: %s\n' 'Appimage unreadable or hashes did not match.'
+	sleep 5s
     exit 1
 fi
 
 rm $tmp_file
 printf "\n%s\n" "Finished downloading!"
+sleep 5s
 exit 0
