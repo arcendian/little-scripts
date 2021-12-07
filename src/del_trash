@@ -1,0 +1,17 @@
+#!/bin/sh
+
+trash_bin="$HOME/.local/share/Trash"
+
+choices="Yes\nNo"
+choice="$(printf "$choices" | dmenu -i -p "Delete Trash? ")"
+
+case "$choice" in
+"Yes")
+	[ -d "$trash_bin" ] && rm -rf "$trash_bin" || notify-send "No trash to clean"
+	exit 0;
+	;;
+*)
+	exit 0
+	;;
+esac
+
