@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+# super basic script to search the arch-wiki docs via dmenu
+
+article=$(ls /usr/share/doc/arch-wiki/html/en | dmenu -l 10 -i)
+fullpath="/usr/share/doc/arch-wiki/html/en/"$article
+brave $fullpath
